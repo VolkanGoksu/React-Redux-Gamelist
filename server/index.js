@@ -1,12 +1,16 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import nodemon from 'nodemon';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
+import gameRouter from './routers/gameRouters.js'
 
 dotenv.config();
+
 const app = express();
+
+app.use(express.json({limit:'20mb'}))
+app.use('/games',gameRouter);
 
 app.listen(process.env.PORT,()=>{
     mongoose.connect(process.env.MONGO_URI,{
