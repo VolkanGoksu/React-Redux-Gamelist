@@ -1,10 +1,15 @@
 import React from 'react';
+import SubmitGame from '../components/SubmitGame.js';
+
+import { Container } from 'react-bootstrap';
 
 const CreateScreen= () =>{
     return(
-        <div>
-            <h1>Create Screen</h1>
-        </div>
+       <>
+       <Container>
+         <SubmitGame />
+       </Container>
+       </>
     )
 }
 
