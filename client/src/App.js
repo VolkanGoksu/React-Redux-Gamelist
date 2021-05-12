@@ -7,6 +7,7 @@ import Header from './components/Header.js';
 import Footer from './components/Footer.js';
 
 import { Container } from 'react-bootstrap';
+import { AuthScreen } from './Screens/AuthScreen.js';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path='/' component={HomeScreen} exact />
         <Route path='/create' component={CreateScreen} />
         <Route path='/update/:id' component={UpdateScreen} />
+        <Route path='/auth' component={AuthScreen} />
       </Container>
       <Footer />
     </Router>

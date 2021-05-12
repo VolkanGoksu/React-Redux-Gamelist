@@ -3,6 +3,9 @@ import React from 'react';
 import { Navbar, Nav, Button, } from 'react-bootstrap'
 import{ LinkContainer } from 'react-router-bootstrap';
 
+import {BiGame} from 'react-icons/bi';
+import {RiLoginBoxFill} from 'react-icons/ri';
+
 const Header = () => {
     return (
         <header>
@@ -15,9 +18,14 @@ const Header = () => {
                     <Nav className="mr-auto">
                       <LinkContainer to='/create'>
                             <Nav.Link>
-                                <Button>Oyun Ekle</Button>
+                                <Button variant='outline-info'> <BiGame size={20} /> Oyun Ekle</Button>
                             </Nav.Link>
                         </LinkContainer>       
+                        <LinkContainer to='/auth'>
+                            <Nav.Link>
+                                <Button  variant='outline-light'> <RiLoginBoxFill size={20}/> Giriş Yap</Button>
+                            </Nav.Link>
+                        </LinkContainer>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

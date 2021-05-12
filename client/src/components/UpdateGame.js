@@ -20,7 +20,6 @@ const UpdateGame = ({ id }) => {
     useEffect(() => {
         const getGame = async () => {
             
-          
         }
         getGame()
     }, [id])
