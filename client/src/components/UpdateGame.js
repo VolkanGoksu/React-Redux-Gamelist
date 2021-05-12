@@ -1,30 +1,40 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReactFileBase64 from 'react-file-base64';
 import { Form, Button } from 'react-bootstrap';
 
-import {useHistory} from 'react-router-dom';
-import * as api from '../axios/index.js';
-const SubmitGame = () => {
+import { useHistory } from 'react-router-dom';
+import { updateGame, fetchGame } from '../axios/index.js';
+
+const UpdateGame = ({ id }) => {
     const [gameData, setGameData] = useState({
         title: '',
         image: ''
     })
+
+    useEffect(() => {
+        const getGame = async () => {
+            const { data } = await fetchGame(id);
+            setGameData(data)
+        }
+        getGame()
+    }, [id])
     const history = useHistory()
     return (
         <>
             <Form onSubmit={(e) => {
                 e.preventDefault()
-                api.createGame(gameData)
+                updateGame(id, gameData)
                 history.push('/')
             }}>
                 <Form.Group>
-                    <h1>Oyun Ekle</h1>
+                    <h1>Düzenle</h1>
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Oyun ismi</Form.Label>
                     <Form.Control name='title' type='text' onChange={(e) =>
                         setGameData({ ...gameData, title: e.target.value })
                     }
+                    value = {gameData.title}
 
                     ></Form.Control>
                 </Form.Group>
@@ -32,8 +42,8 @@ const SubmitGame = () => {
                     <ReactFileBase64
                         type='file'
                         multiple={false}
-                        onDone={({base64})=>{
-                            setGameData({...gameData,image:base64})
+                        onDone={({ base64 }) => {
+                            setGameData({ ...gameData, image: base64 })
                         }}
                     />
                 </Form.Group>
@@ -43,4 +53,4 @@ const SubmitGame = () => {
     )
 }
 
-export default SubmitGame
+export default UpdateGame
