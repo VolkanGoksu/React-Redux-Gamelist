@@ -9,10 +9,13 @@ import {Spinner,Row,Col} from 'react-bootstrap';
 
 const HomeScreen = () => {
     const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(fetchGames())
-    }, [dispatch])
     const games = useSelector((state) => state.games)   
+    useEffect(() => {
+        if(!games[0]){
+            dispatch(fetchGames())
+        }
+    }, [dispatch])
+
     return (
         <>
          {

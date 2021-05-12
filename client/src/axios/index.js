@@ -4,7 +4,7 @@ const API = axios.create({baseURL:'http://localhost:5000'})
 
 export const fetchGames = async () => await API.get('/games')
 
-export const fetchGame = async (id) => API.get(`/games/${id}`)
+export const fetchGame = async (id) => await API.get(`/games/${id}`)
 
 export const createGame = async (newGame) => await API.post('/games',newGame)
 

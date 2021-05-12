@@ -11,3 +11,31 @@ export const fetchGames = () => async (dispatch) => {
       console.log(error)
     }
   }
+
+  export const createGame = (game) => async dispatch =>{
+    try {
+      const{data} = await api.createGame(game)
+      dispatch({type:CREATE,payload:data})
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  export const deleteGame = (id) => async (dispatch) => {
+    try {
+      await api.deleteGame(id)
+  
+      dispatch({ type: DELETE, payload: id })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  export const updateGame = (id,updatedGame) => async(dispatch) =>{
+    try {
+      const{data} = await api.updateGame(id,updatedGame)
+      
+      dispatch({ type: UPDATE, payload: data })
+    } catch (error) {
+       console.log(error);
+    }
+  }

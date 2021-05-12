@@ -6,10 +6,13 @@ import {LinkContainer} from 'react-router-bootstrap';
 
 import {MdDelete, MdModeEdit} from 'react-icons/md';
 
-import {deleteGame} from '../axios/index.js';
+import { useDispatch } from 'react-redux'
+
+import { deleteGame } from '../actions/gameActions'
  
 
 const Game = ({game})=>{
+    const dispatch = useDispatch()
     return (
        <Card className = 'rounded py-3 my-3'>
            <Card.Img variant="top" src={game.image}></Card.Img>
@@ -21,7 +24,11 @@ const Game = ({game})=>{
               <LinkContainer to ={`/update/${game._id}`} style={{cursor:'pointer'}}>
                   <MdModeEdit color = 'blue' size={20} />
               </LinkContainer>
-              <MdDelete color = 'red' style={{cursor:'pointer'}}size = {20} onClick={()=>deleteGame(game._id)}/>
+              <MdDelete color = 'red' style={{cursor:'pointer'}}size = {20} 
+                onClick={() => {
+                    dispatch(deleteGame(game._id))
+                  }}
+              />
           </Card.Footer>
        </Card>
     )

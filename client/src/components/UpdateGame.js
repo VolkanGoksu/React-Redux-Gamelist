@@ -3,9 +3,15 @@ import ReactFileBase64 from 'react-file-base64';
 import { Form, Button } from 'react-bootstrap';
 
 import { useHistory } from 'react-router-dom';
-import { updateGame, fetchGame } from '../axios/index.js';
+
+import { updateGame } from '../actions/gameActions'
+
+import { useDispatch } from 'react-redux'
+
+import { fetchMemory } from '../axios/index.js'
 
 const UpdateGame = ({ id }) => {
+    const dispatch = useDispatch()
     const [gameData, setGameData] = useState({
         title: '',
         image: ''
@@ -13,8 +19,8 @@ const UpdateGame = ({ id }) => {
 
     useEffect(() => {
         const getGame = async () => {
-            const { data } = await fetchGame(id);
-            setGameData(data)
+            
+          
         }
         getGame()
     }, [id])
@@ -23,7 +29,7 @@ const UpdateGame = ({ id }) => {
         <>
             <Form onSubmit={(e) => {
                 e.preventDefault()
-                updateGame(id, gameData)
+                dispatch(updateGame(id, gameData))
                 history.push('/')
             }}>
                 <Form.Group>

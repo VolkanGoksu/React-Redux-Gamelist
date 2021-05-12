@@ -3,18 +3,22 @@ import ReactFileBase64 from 'react-file-base64';
 import { Form, Button } from 'react-bootstrap';
 
 import {useHistory} from 'react-router-dom';
-import * as api from '../axios/index.js';
+import {useDispatch} from 'react-redux';
+import {createGame} from '../actions/gameActions'
+
+
 const SubmitGame = () => {
     const [gameData, setGameData] = useState({
         title: '',
         image: ''
     })
     const history = useHistory()
+    const dispatch = useDispatch()
     return (
         <>
             <Form onSubmit={(e) => {
                 e.preventDefault()
-                api.createGame(gameData)
+                dispatch(createGame(gameData))
                 history.push('/')
             }}>
                 <Form.Group>
