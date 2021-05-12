@@ -6,7 +6,7 @@ import {LinkContainer} from 'react-router-bootstrap';
 
 import {MdDelete, MdModeEdit} from 'react-icons/md';
 
-import {deleteGame,updateGame} from '../axios/index.js';
+import {deleteGame} from '../axios/index.js';
  
 
 const Game = ({game})=>{

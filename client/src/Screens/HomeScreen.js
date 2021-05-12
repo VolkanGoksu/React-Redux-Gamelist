@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import Game from '../components/Game';
 
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchGames } from '../actions/gameActions.js'
+
 import {Spinner,Row,Col} from 'react-bootstrap';
-import { fetchGames } from '../axios/index';
+
 
 const HomeScreen = () => {
-    const [games, setGames] = useState([])
-
+    const dispatch = useDispatch()
     useEffect(() => {
-        const getGames = async () => {
-            const {data} = await fetchGames()
-            console.log(data);
-            setGames(data)
-            
-        }
-        getGames()
-    },[])
-
+        dispatch(fetchGames())
+    }, [dispatch])
+    const games = useSelector((state) => state.games)   
     return (
         <>
          {
