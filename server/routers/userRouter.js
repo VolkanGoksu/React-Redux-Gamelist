@@ -53,5 +53,15 @@ router.post('/signup', async (req, res) => {
     console.log(error)
   }
 })
-
+router.get('/logout/:id', async(req,res)=>{
+  try {
+     const {id} = req.params
+     await tokenModel.findOneAndUpdate({
+       userId: id
+     },{refreshToken:null},{new:true})
+     res.status(200).json({message:'Başarıyla çıkış yapıldı'})
+  } catch (error) {
+     res.status(500).json(error)
+  }
+})
 export default router

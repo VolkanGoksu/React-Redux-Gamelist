@@ -12,5 +12,6 @@ export const deleteGame = async (id) => await API.delete(`/games/${id}`)
 
 export const updateGame = async (id,updatedGame) => await API.put(`/games/${id}`,updatedGame)
 
-export const signUp = async (formData)=>
-  await API.post('/users/signup',formData)
+export const signUp = async (formData)=> await API.post('/users/signup',formData)
+
+ export const logOut = async (id) => await API.get(`/users/logout/${id}`)

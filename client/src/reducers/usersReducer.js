@@ -1,4 +1,7 @@
-import { AUTH, SIGN_UP_FAIL} from '../constants/actionsConstants.js'
+import {
+  AUTH, SIGN_UP_FAIL, LOGOUT,
+  LOGOUT_FAILED,
+} from '../constants/actionsConstants.js'
 
 const usersReducer = (state = { userData: null }, action) => {
   switch (action.type) {
@@ -7,6 +10,13 @@ const usersReducer = (state = { userData: null }, action) => {
       return { ...state, userData: action.payload }
 
     case SIGN_UP_FAIL:
+      return { error: action.payload }
+
+    case LOGOUT:
+      localStorage.removeItem('user')
+      return { ...state, userData: null }
+
+    case LOGOUT_FAILED:
       return { error: action.payload }
 
     default:
