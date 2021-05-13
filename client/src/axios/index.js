@@ -11,3 +11,4 @@ export const createGame = async (newGame) => await API.post('/games',newGame)
 export const deleteGame = async (id) => await API.delete(`/games/${id}`)
 
 export const updateGame = async (id,updatedGame) => await API.put(`/games/${id}`,updatedGame)
+
