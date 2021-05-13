@@ -10,9 +10,11 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 
 import gamesReducer from './reducers/gamesReducer'
+import usersReducer from './reducers/usersReducer';
 
 const reducer = combineReducers({
   games: gamesReducer,
+  user:usersReducer
 })
 const store = createStore(reducer, composeWithDevTools(applyMiddleware(thunk)))
 ReactDOM.render(

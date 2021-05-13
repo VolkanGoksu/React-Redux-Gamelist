@@ -1,8 +1,24 @@
 import React, { useState } from 'react'
 
 import { Container, Col, Row, Form, Button } from 'react-bootstrap'
-export const AuthScreen = () => {
+import Message from '../components/Message.js'
+
+import {useDispatch,useSelector} from 'react-redux';
+import {signup} from '../actions/userAction';
+export const AuthScreen = ({history}) => {
+    const initialFormData = {
+        name :'',
+        email:'',
+        password:'',
+        confirmPassword:''
+        
+    }
+    const userState = useSelector((state)=>state.user)
+    const {error} = userState
+    const [form, setForm] = useState(initialFormData)
     const [login, setLogin] = useState(true)
+
+    const dispatch = useDispatch();
     return (
         <>
             <Container>
@@ -10,18 +26,22 @@ export const AuthScreen = () => {
                     <Col xs={12} md={6}>
                         {
                             login ?
-                                <Form className='align-content-center mt-3'>
+                                <Form
+                             
+                                className='align-content-center mt-3'>
                                     <h1 className='text-center mb-3'>Giriş Yap</h1>
                                     <Form.Group>
                                         <Form.Label>Email</Form.Label>
                                         <Form.Control
                                             type='email'
+                                           
                                         ></Form.Control>
                                     </Form.Group>
                                     <Form.Group>
                                         <Form.Label>Şifre</Form.Label>
                                         <Form.Control
                                             type='password'
+                                        
                                         ></Form.Control>
                                     </Form.Group >
                                     <Button type='submit' >Giriş Yap</Button><hr></hr>
@@ -32,19 +52,33 @@ export const AuthScreen = () => {
 
                                 :
                                 (
-                                    <Form className='align-content-center mt-3'>
+                                    <Form
+                                    onSubmit={(e)=>{
+                                        e.preventDefault();
+                                        if(!login){
+                                            dispatch(signup(form,history))
+                                        }
+                                    }}
+                                    className='align-content-center mt-3'>
                                         <h1 className='text-center mb-3'>Kayıt Ol</h1>
+                                        {error && <Message>{error}</Message>}
 
                                         <Form.Group>
                                         <Form.Label>Adınız</Form.Label>
                                             <Form.Control
                                                 type='text'
+                                                onChange={(e) =>
+                                                    setForm({ ...form, name: e.target.value })
+                                                  }
                                             ></Form.Control>
                                         </Form.Group>
                                         <Form.Group>
                                             <Form.Label>Email</Form.Label>
                                             <Form.Control
                                                 type='email'
+                                                onChange={(e) =>
+                                                    setForm({ ...form, email: e.target.value })
+                                                  }
                                             ></Form.Control>
                                         </Form.Group>
 
@@ -52,6 +86,9 @@ export const AuthScreen = () => {
                                             <Form.Label>Şifre</Form.Label>
                                             <Form.Control
                                                 type='password'
+                                                onChange={(e) =>
+                                                    setForm({ ...form,  password: e.target.value })
+                                                  }
                                             ></Form.Control>
                                         </Form.Group>
 
@@ -59,6 +96,7 @@ export const AuthScreen = () => {
                                             <Form.Label>Şifrenizi doğrulayın</Form.Label>
                                             <Form.Control
                                                 type='password'
+                                                onChange={(e)=>setForm({...form,confirmPassword:e.target.value})}
                                             ></Form.Control>
                                         </Form.Group>
 

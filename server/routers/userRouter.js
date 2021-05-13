@@ -10,7 +10,7 @@ const router = express.Router()
 
 router.post('/signup', async (req, res) => {
   try {
-    const { email, password, confirmPassword, firstName,name } = req.body
+    const { email, password, confirmPassword,name } = req.body
 
     const userExists = await User.findOne({ email })
 
