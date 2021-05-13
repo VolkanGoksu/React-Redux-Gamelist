@@ -4,7 +4,8 @@ import { Container, Col, Row, Form, Button } from 'react-bootstrap'
 import Message from '../components/Message.js'
 
 import {useDispatch,useSelector} from 'react-redux';
-import {signup} from '../actions/userAction';
+import { signup, signin } from '../actions/userAction.js'
+
 export const AuthScreen = ({history}) => {
     const initialFormData = {
         name :'',
@@ -27,21 +28,33 @@ export const AuthScreen = ({history}) => {
                         {
                             login ?
                                 <Form
-                             
+                                     onSubmit={(e)=>{
+                                        e.preventDefault();
+                                        if(login){
+                                            dispatch(signin(form,history))
+                                        }
+                                    }}
+                                
                                 className='align-content-center mt-3'>
                                     <h1 className='text-center mb-3'>Giriş Yap</h1>
+                                    {error && <Message>{error}</Message>}
                                     <Form.Group>
                                         <Form.Label>Email</Form.Label>
                                         <Form.Control
-                                            type='email'
-                                           
+                                             type='text'
+                                             type='email'
+                                             onChange={(e) =>
+                                                setForm({ ...form, email: e.target.value })
+                                              }
                                         ></Form.Control>
                                     </Form.Group>
                                     <Form.Group>
                                         <Form.Label>Şifre</Form.Label>
                                         <Form.Control
                                             type='password'
-                                        
+                                            onChange={(e) =>
+                                                setForm({ ...form, password: e.target.value })
+                                              }
                                         ></Form.Control>
                                     </Form.Group >
                                     <Button type='submit' >Giriş Yap</Button><hr></hr>

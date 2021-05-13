@@ -1,4 +1,4 @@
-import { AUTH, SIGN_UP_FAIL , LOGOUT,LOGOUT_FAILED} from '../constants/actionsConstants.js'
+import { AUTH, SIGN_UP_FAIL , LOGOUT,LOGOUT_FAILED,SIGNIN_FAIL} from '../constants/actionsConstants.js'
 import * as api from '../axios'
 
 export const signup = (formData, history) => async (dispatch) => {
@@ -10,7 +10,25 @@ export const signup = (formData, history) => async (dispatch) => {
     history.push('/')
   } catch (error) {
     dispatch({
-      type: SIGN_UP_FAIL,
+      type: SIGNIN_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+
+export const signin = (formData, history) => async (dispatch) => {
+  try {
+    const { data } = await api.signIn(formData)
+
+    dispatch({ type: AUTH, payload: data })
+
+    history.push('/')
+  } catch (error) {
+    dispatch({
+      type: SIGNIN_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

@@ -14,4 +14,7 @@ export const updateGame = async (id,updatedGame) => await API.put(`/games/${id}`
 
 export const signUp = async (formData)=> await API.post('/users/signup',formData)
 
- export const logOut = async (id) => await API.get(`/users/logout/${id}`)
+export const signIn = async (formData) =>
+  await API.post('/users/signin', formData)
+
+export const logOut = async (id) => await API.get(`/users/logout/${id}`)

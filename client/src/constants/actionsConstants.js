@@ -10,3 +10,5 @@ export const SIGN_UP_FAIL = 'SIGN_UP_FAIL'
 //LOGOUT
 export const LOGOUT = 'LOGOUT'
 export const LOGOUT_FAILED = 'LOGOUT_FAILED'
+//SIGNIN
+export const SIGNIN_FAIL = 'SIGNIN_FAIL'

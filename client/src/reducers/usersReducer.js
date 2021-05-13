@@ -1,6 +1,6 @@
 import {
   AUTH, SIGN_UP_FAIL, LOGOUT,
-  LOGOUT_FAILED,
+  LOGOUT_FAILED,SIGNIN_FAIL,
 } from '../constants/actionsConstants.js'
 
 const usersReducer = (state = { userData: null }, action) => {
@@ -8,9 +8,12 @@ const usersReducer = (state = { userData: null }, action) => {
     case AUTH:
       localStorage.setItem('user', JSON.stringify(action.payload))
       return { ...state, userData: action.payload }
-
+  
     case SIGN_UP_FAIL:
       return { error: action.payload }
+
+      case SIGNIN_FAIL:
+        return { error: action.payload }
 
     case LOGOUT:
       localStorage.removeItem('user')
