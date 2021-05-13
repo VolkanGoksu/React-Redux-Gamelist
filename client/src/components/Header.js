@@ -12,6 +12,7 @@ import { RiLoginBoxFill } from 'react-icons/ri';
 import { BiLogOutCircle } from 'react-icons/bi';
 
 import { logout } from '../actions/userAction.js';
+import { getRefreshToken } from '../axios'
 
 import decode from 'jwt-decode';
 const Header = () => {
@@ -19,11 +20,17 @@ const Header = () => {
     const history = useHistory()
     const location = useLocation()
     const [user, setUser] = useState()
+    const [refreshToken, setRefreshToken] = useState('')
 
     const exit = async (id) => {
         await dispatch(logout(id))
         setUser(null)
         history.push('/')
+    }
+
+    const getToken = async (id) =>{
+        const data = await getRefreshToken(id)
+        setRefreshToken(data.refreshToken)
     }
 
     useEffect(() => {
@@ -38,6 +45,11 @@ const Header = () => {
                 exit(user.user._id)
             }
         }
+        if(user){
+            getToken(user.user._id)
+            console.log(refreshToken);
+        }
+        
     }, [location, user])
 
     return (
@@ -46,14 +58,14 @@ const Header = () => {
                 <LinkContainer to='/'>
                     <Navbar.Brand href="#home">GameList</Navbar.Brand>
                 </LinkContainer>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
+                <Navbar.Toggle aria-controls="basic-navbar-nav"  />
+                <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end'>
                     <Nav >
                         {user ? (
                             <>
                                 <LinkContainer to='/create'>
                                     <Nav.Link>
-                                        <Button variant='outline-info'>
+                                        <Button variant="danger">
                                             <BiGame className='mr-2' size={20} />
                                                 Oyun Ekle
                                               </Button>
@@ -65,7 +77,7 @@ const Header = () => {
                                         onClick={(e) => {
                                             exit(user.user._id)
                                         }}
-                                        variant='outline-danger'
+                                        variant="danger"
                                                                   >
                                         <BiLogOutCircle size={20} className='mr-2' />
                                          Çıkış yap

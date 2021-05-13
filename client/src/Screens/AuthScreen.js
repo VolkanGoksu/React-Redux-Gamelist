@@ -37,7 +37,7 @@ export const AuthScreen = ({history}) => {
                                 
                                 className='align-content-center mt-3'>
                                     <h1 className='text-center mb-3'>Giriş Yap</h1>
-                                    {error && <Message>{error}</Message>}
+                                    {error && <Message >{error}</Message>}
                                     <Form.Group>
                                         <Form.Label>Email</Form.Label>
                                         <Form.Control
@@ -57,6 +57,7 @@ export const AuthScreen = ({history}) => {
                                               }
                                         ></Form.Control>
                                     </Form.Group >
+                                    
                                     <Button type='submit' >Giriş Yap</Button><hr></hr>
                                 Bir hesabın yok mu?{' '}<span onClick={(e) => setLogin(!login)} style={{ fontWeight: 'bold', cursor: 'pointer' }}>
                                         Kayıt ol

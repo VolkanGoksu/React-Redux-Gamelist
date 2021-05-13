@@ -7,6 +7,7 @@ const gameSchema = mongoose.Schema({
     image:{
         type:String,
     },
+  
     createdAt:{
        type:Date,
        default:new Date()

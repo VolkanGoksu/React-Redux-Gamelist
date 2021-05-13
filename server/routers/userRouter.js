@@ -97,4 +97,16 @@ router.post('/signin',async(req,res)=>{
      res.status(400).json({message:'Hata'})
   }
 })
+
+router.get('/gettoken/:id',async(req,res)=>{
+  try {
+    const {id}=req.params
+    const {refreshToken} = await tokenModel.findOneAndUpdate({userId:id})
+    if(!refreshToken) return res.sendStatus(401)
+
+    res.status(200).json({refreshToken})
+  } catch (error) {
+    console.log(error.massage)
+  }
+})
 export default router
