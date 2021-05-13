@@ -1,6 +1,11 @@
 import {
-  AUTH, SIGN_UP_FAIL, LOGOUT,
-  LOGOUT_FAILED,SIGNIN_FAIL,
+  AUTH,
+   SIGN_UP_FAIL, 
+  LOGOUT,
+  LOGOUT_FAILED,
+  SIGNIN_FAIL ,
+  REFRESH_ACCESS_TOKEN_FAIL,
+  REFRESH_ACCESS_TOKEN_SUCCESS,
 } from '../constants/actionsConstants.js'
 
 const usersReducer = (state = { userData: null }, action) => {
@@ -21,7 +26,15 @@ const usersReducer = (state = { userData: null }, action) => {
 
     case LOGOUT_FAILED:
       return { error: action.payload }
+    
+      case REFRESH_ACCESS_TOKEN_SUCCESS:
+      const data = { user: state.userData.user, accessToken: action.payload }
 
+      localStorage.setItem('user', JSON.stringify(data))
+      return { ...state, userData: data }
+
+      case REFRESH_ACCESS_TOKEN_FAIL:
+        return { error: action.payload }
     default:
       return state
   }

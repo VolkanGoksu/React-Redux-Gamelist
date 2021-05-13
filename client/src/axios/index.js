@@ -18,12 +18,7 @@ export const signIn = async (formData) => await API.post('/users/signin', formDa
 
 export const logOut = async (id) => await API.get(`/users/logout/${id}`)
 
-export const getRefreshToken = async (userId) => {
-  try {
-    const { data } = await API.get(`/users/gettoken/${userId}`)
+export const refreshAccessToken = async (userId) =>
+  await API.get(`/users/refresh/${userId}`)
 
-    return data
-  } catch (error) {
-    console.log(error)
-  }
-}
+ 

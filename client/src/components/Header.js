@@ -11,8 +11,8 @@ import { BiGame } from 'react-icons/bi';
 import { RiLoginBoxFill } from 'react-icons/ri';
 import { BiLogOutCircle } from 'react-icons/bi';
 
-import { logout } from '../actions/userAction.js';
-import { getRefreshToken } from '../axios'
+import { logout, getAccessToken} from '../actions/userAction.js';
+
 
 import decode from 'jwt-decode';
 const Header = () => {
@@ -20,35 +20,36 @@ const Header = () => {
     const history = useHistory()
     const location = useLocation()
     const [user, setUser] = useState()
-    const [refreshToken, setRefreshToken] = useState('')
+ 
 
     const exit = async (id) => {
         await dispatch(logout(id))
         setUser(null)
         history.push('/')
     }
-
-    const getToken = async (id) =>{
-        const data = await getRefreshToken(id)
-        setRefreshToken(data.refreshToken)
-    }
+    const renewAccessToken = async (id) => {
+        await dispatch(getAccessToken(id))
+        setUser(JSON.parse(localStorage.getItem('user')))
+      }
 
     useEffect(() => {
         
         if (localStorage.getItem('user') && !user) {
             setUser(JSON.parse(localStorage.getItem('user')))
         }
-        const accessToken = user?.accessToken
-        if(accessToken){
-            const decudeAccessToken = decode(accessToken)
-            if(decudeAccessToken.exp*1000<new Date().getTime()){
-                exit(user.user._id)
+        const interval = setInterval(() => {
+            const accessToken = user?.accessToken
+            if (accessToken) {
+                const decodedAccessToken = decode(accessToken)
+                if (decodedAccessToken.exp * 1000 < new Date().getTime()) {
+                    console.log(decodedAccessToken.exp)
+                    renewAccessToken(user.user._id)
+                }
             }
-        }
-        if(user){
-            getToken(user.user._id)
-            console.log(refreshToken);
-        }
+     
+        },5000)
+        return () => {
+            clearInterval(interval)}
         
     }, [location, user])
 

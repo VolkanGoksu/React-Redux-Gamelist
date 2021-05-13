@@ -80,7 +80,7 @@ router.post('/signin',async(req,res)=>{
      const accessToken = jwt.sign(
        {email:user.email, id:user._id},
        process.env.ACCESS_TOKEN_SECRET,
-       {expiresIn:'3m'}
+       {expiresIn:'15s'}
      )
      const refreshToken = jwt.sign(
        {email:user.email, id:user._id},
@@ -98,13 +98,24 @@ router.post('/signin',async(req,res)=>{
   }
 })
 
-router.get('/gettoken/:id',async(req,res)=>{
+router.get('/refresh/:id', async (req, res) => {
   try {
-    const {id}=req.params
-    const {refreshToken} = await tokenModel.findOneAndUpdate({userId:id})
-    if(!refreshToken) return res.sendStatus(401)
+    const { id } = req.params
+    const { refreshToken } = await tokenModel.findOne({ userId: id })
+    if (!refreshToken) return res.sendStatus(401)
 
-    res.status(200).json({refreshToken})
+
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, x) => {
+      if (err) return res.status(403).json(err)
+
+      const accessToken = jwt.sign(
+        { email: x.email, id: x.id },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: '15s' }
+      )
+
+      res.status(200).json(accessToken)
+    })
   } catch (error) {
     console.log(error.massage)
   }
