@@ -9,9 +9,11 @@ import { useLocation, useHistory } from 'react-router-dom'
 
 import { BiGame } from 'react-icons/bi';
 import { RiLoginBoxFill } from 'react-icons/ri';
-import { BiLogOutCircle } from 'react-icons/bi'
+import { BiLogOutCircle } from 'react-icons/bi';
 
 import { logout } from '../actions/userAction.js';
+
+import decode from 'jwt-decode';
 const Header = () => {
     const dispatch = useDispatch()
     const history = useHistory()
@@ -25,11 +27,17 @@ const Header = () => {
     }
 
     useEffect(() => {
-        console.log(user)
+        
         if (localStorage.getItem('user') && !user) {
             setUser(JSON.parse(localStorage.getItem('user')))
         }
-        console.log(user)
+        const accessToken = user?.accessToken
+        if(accessToken){
+            const decudeAccessToken = decode(accessToken)
+            if(decudeAccessToken.exp*1000<new Date().getTime()){
+                exit(user.user._id)
+            }
+        }
     }, [location, user])
 
     return (
