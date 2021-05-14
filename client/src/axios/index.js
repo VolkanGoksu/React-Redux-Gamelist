@@ -1,6 +1,9 @@
 import axios from 'axios';
 
-const API = axios.create({baseURL:'http://localhost:5000'})
+const API = axios.create({
+  baseURL: 'http://localhost:5000',
+  withCredentials: true,
+})
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('user')) {
@@ -31,4 +34,4 @@ export const logOut = async (id) => await API.get(`/users/logout/${id}`)
 export const refreshAccessToken = async (userId) =>
   await API.get(`/users/refresh/${userId}`)
 
- 
+
