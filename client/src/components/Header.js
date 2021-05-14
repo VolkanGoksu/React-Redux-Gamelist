@@ -10,6 +10,7 @@ import { useLocation, useHistory } from 'react-router-dom'
 import { BiGame } from 'react-icons/bi';
 import { RiLoginBoxFill } from 'react-icons/ri';
 import { BiLogOutCircle } from 'react-icons/bi';
+import {SiRiotgames} from 'react-icons/si'
 
 import { logout, getAccessToken} from '../actions/userAction.js';
 
@@ -57,7 +58,7 @@ const Header = () => {
         <header>
             <Navbar bg="primary" variant='dark' expand="lg" collapseOnSelect>
                 <LinkContainer to='/'>
-                    <Navbar.Brand href="#home">GameList</Navbar.Brand>
+                    <Navbar.Brand href="#home"><SiRiotgames /> GameList</Navbar.Brand>
                 </LinkContainer>
                 <Navbar.Toggle aria-controls="basic-navbar-nav"  />
                 <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end' >
