@@ -60,7 +60,7 @@ const Header = () => {
                     <Navbar.Brand href="#home">GameList</Navbar.Brand>
                 </LinkContainer>
                 <Navbar.Toggle aria-controls="basic-navbar-nav"  />
-                <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end'>
+                <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end' >
                     <Nav >
                         {user ? (
                             <>
@@ -74,7 +74,7 @@ const Header = () => {
                                 </LinkContainer>
 
                                 <Nav.Link>
-                                    <Button
+                                    <Button 
                                         onClick={(e) => {
                                             exit(user.user._id)
                                         }}
@@ -93,7 +93,9 @@ const Header = () => {
                                           Giriş yap
                                    </Button>
                                 </Nav.Link>
+                                
                             </LinkContainer>
+                            
                         )}
                     </Nav>
                 </Navbar.Collapse>

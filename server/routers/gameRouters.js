@@ -64,6 +64,9 @@ router.put('/:id',auth,async(req,res)=>{
          
          res.status(404).json({messaage:'Game not found'})
 
+         const oldGame = await Game.findById(id)
+         if(req.creatorId !== oldGame.creatorId) return res.sendStatus(403)
+
          const{title,content,creator,image} = req.body;
 
          const updatedGame = await Game.findByIdAndUpdate(id,{title,content,creator,image, _id:id},{new:true});
@@ -83,6 +86,9 @@ router.delete('/:id',auth,async (req,res)=>{
         if(!mongoose.Types.ObjectId.isValid(id))
          
         res.status(404).json({messaage:'Game not found'})
+
+        const oldGame = await Game.findById(id)
+        if(req.creatorId !== oldGame.creatorId) return res.sendStatus(403)
 
         await Game.findByIdAndDelete(id)
         res.status(200).json({messaage:'Game has been deleted'})
