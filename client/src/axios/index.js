@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'https://game-listt.herokuapp.com/',
+  baseURL: 'https://game-liist.herokuapp.com/',
   withCredentials: true,
 })
 
