@@ -2,6 +2,16 @@ import axios from 'axios';
 
 const API = axios.create({baseURL:'http://localhost:5000'})
 
+API.interceptors.request.use((req) => {
+  if (localStorage.getItem('user')) {
+    req.headers.authorization = `Bearer ${
+      JSON.parse(localStorage.getItem('user')).accessToken
+    }`
+  }
+  return req
+})
+
+
 export const fetchGames = async () => await API.get('/games')
 
 export const fetchGame = async (id) => await API.get(`/games/${id}`)

@@ -11,7 +11,12 @@ const gameSchema = mongoose.Schema({
     createdAt:{
        type:Date,
        default:new Date()
-    }
+    },
+    creatorId: {
+        type: String,
+        required: true,
+      },
+
 })
 
 const Game = mongoose.model('game',gameSchema);

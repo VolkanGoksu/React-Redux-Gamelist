@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 
+import auth from '../middleware/auth.js'
 import Game from '../db/gameMode.js';
 
 const router = express.Router();
@@ -38,11 +39,14 @@ router.get('/:id',async(req,res)=>{
 
 //CREATE GAME
 
-router.post('/',async(req,res)=>{
+router.post('/', auth, async (req, res) => {
     try {
          const game = req.body;
 
-         const createdGame = await Game.create(game);
+         const createdGame = await Game.create({
+             ...game,
+             creatorId:req.creatorId 
+         })
 
          res.status(201).json(createdGame);
     } catch (error) {
@@ -52,7 +56,7 @@ router.post('/',async(req,res)=>{
 })
 
 //UPDATE GAME
-router.put('/:id',async(req,res)=>{
+router.put('/:id',auth,async(req,res)=>{
     try {
         const { id } = req.params;
 
@@ -72,7 +76,7 @@ router.put('/:id',async(req,res)=>{
 })
 
 //DELETE GAME
-router.delete('/:id',async (req,res)=>{
+router.delete('/:id',auth,async (req,res)=>{
     try {
         const { id } = req.params;
 
